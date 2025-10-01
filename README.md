@@ -50,7 +50,11 @@ docker build -t spring-boot-devops .
 
 Run the Docker container
 ```bash
-docker run -p 8080:8080 spring-boot-devops
+docker run \
+  -p 8080:8080 \
+  -e "APP_MESSAGE=Hello, DevOps! From Docker Container" \
+  -e "APP_DESCRIPTION=This is a sample Spring Boot application for DevOps practices." \
+  spring-boot-devops
 ```
 
 ### Option 3: Run with Docker Compose
@@ -61,4 +65,13 @@ docker-compose up -d
 
 # Check status
 docker-compose ps
+```
+
+## Run Test
+
+```bash
+mvn test
+
+# test coverage
+mvn clean test
 ```
