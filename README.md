@@ -55,6 +55,14 @@ docker run \
   -e "APP_MESSAGE=Hello, DevOps! From Docker Container" \
   -e "APP_DESCRIPTION=This is a sample Spring Boot application for DevOps practices." \
   spring-boot-devops
+
+# run with .env
+
+cp .env.example .env
+# Then fill in actual values
+
+docker run -p 8080:8080 --env-file .env spring-boot-devops
+
 ```
 
 ### Option 3: Run with Docker Compose
