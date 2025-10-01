@@ -16,9 +16,9 @@ WORKDIR /usr/src/app
 
 RUN groupadd --system appgroup && useradd --system -g appgroup appuser
 
-USER appuser
+COPY --chown=appuser:appgroup --from=builder /usr/src/app/target/your-artifact-id-*.jar /usr/src/app/app.jar
 
-COPY --from=builder /usr/src/app/target/*.jar /usr/src/app/app.jar
+USER appuser
 
 EXPOSE 8080
 
