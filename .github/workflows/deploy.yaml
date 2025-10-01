@@ -1,0 +1,58 @@
+name: Spring Boot CI Deploy
+
+on:
+    push:
+        branches:
+            - main
+            - devlop
+    pull_request:
+        branches:
+            - main
+            - devlop
+    workflow_dispatch:
+
+concurrency:
+    group: ${{ github.workflow }}-${{ github.ref }}
+    cancel-in-progress: true
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v5
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@v5
+              with:
+                    distribution: 'temurin'
+                    java-version: '21'
+                    cache: 'maven'
+
+            - name: Build with Maven
+              run: mvn clean install -DskipTests
+
+            - name: Package application
+              run: mvn -B clean package -DskipTests
+
+            - name: Upload JAR artifact
+              uses: actions/upload-artifact@v4
+              with:
+                    name: spring-boot-app
+                    path: target/*.jar
+    
+    test:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Set up JDK 21
+              uses: actions/setup-java@v5
+              with:
+                    distribution: 'temurin'
+                    java-version: '21'
+                    cache: 'maven'
+
+            - name: Run tests
+              run: mvn -B clean test
