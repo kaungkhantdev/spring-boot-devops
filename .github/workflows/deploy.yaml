@@ -6,6 +6,7 @@ on:
             - main
             - devlop
     pull_request:
+        types: [opened, synchronize, reopened]
         branches:
             - main
             - devlop
