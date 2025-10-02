@@ -4,12 +4,12 @@ on:
     push:
         branches:
             - main
-            - devlop
+            - develop
     pull_request:
         types: [opened, synchronize, reopened]
         branches:
             - main
-            - devlop
+            - develop
     workflow_dispatch:
 
 concurrency:
